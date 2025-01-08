@@ -1,8 +1,8 @@
 import { createClient } from '@/utils/supabase/server'
 import { UserList } from './userList'
 import { getUsers,deleteUser,newUser } from '@/app/lib/actions'
+import { Link } from 'next/navigation'
 
-//TODO: idk, fuggn... enable database changes
 export default async function Page() {
     const users =await getUsers();
     console.log("got users");
@@ -23,21 +23,21 @@ export default async function Page() {
     return (
         <>
           {/*  <UserList users={users} />*/}
-
-        <ul>
-            {users.map((entry) => (
-                <li key={entry.id}>
-                    {entry.name}
-                    <button onPressed={deleteUser(entry.id)}>
-                        delete {entry.name}
-                    </button>
-                    <dropDown onPressed="changeRole(entry.id)">
+            <ul>
+                {users.map((entry) => (
+                    <li key={entry.id}>
+                        {entry.name}
+                        <button disabled onClick={deleteUser(entry.id)}>
+                            delete {entry.name}
+                        </button>
+                        <button onClick="changeRole(entry.id)">
                         role: {entry.role}
-                    </dropDown>
-                </li>
-            ))}
-            <button onPressed="addUser()">Neuen Nutzer hinzufügen</button>
-        </ul>        </>
+                        </button>
+                    </li>
+                ))}
+                {/*<Link href='./userCreationForm/' >Neuen Nutzer hinzufügen</Link>*/}
+            </ul>
+        </>
      //<pre>{JSON.stringify(users, null,2)}</pre>
     );
 }

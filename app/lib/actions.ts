@@ -33,13 +33,15 @@ export async function newUser(userData: FormData){
 }
 
 export async function deleteUser(id){
+    console.log("Who called?");
     const { error } =await supabase
-        .from('USERS')
+        .from('NOTES')
         .delete().eq('id',id)
     ;
     revalidatePath('/nutzer');
     redirect('/nutzer');
 }
+
 export async function getUsers(){
     const{data}=await supabase
         .from('USERS')
