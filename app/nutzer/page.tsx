@@ -1,11 +1,12 @@
 import { createClient } from '@/utils/supabase/server'
 import { UserList } from './userList'
-import { newUser } from '@/app/lib/actions'
+import { getUsers,deleteUser,newUser } from '@/app/lib/actions'
 
 //TODO: idk, fuggn... enable database changes
 export default async function Page() {
-    const supabase = await createClient();
-    const {data: users} = await supabase.from("USERS").select();
+    const users =await getUsers();
+    console.log("got users");
+    console.log(users);
 
     //remove the associated user entry
     //(no confirmation (yet(?)))
@@ -27,7 +28,7 @@ export default async function Page() {
             {users.map((entry) => (
                 <li key={entry.id}>
                     {entry.name}
-                    <button onPressed='removeUser(entry.id)'>
+                    <button onPressed={deleteUser(entry.id)}>
                         delete {entry.name}
                     </button>
                     <dropDown onPressed="changeRole(entry.id)">
@@ -35,7 +36,7 @@ export default async function Page() {
                     </dropDown>
                 </li>
             ))}
-            <button onPressed="addUser()">+</button>
+            <button onPressed="addUser()">Neuen Nutzer hinzufügen</button>
         </ul>        </>
      //<pre>{JSON.stringify(users, null,2)}</pre>
     );
