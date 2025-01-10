@@ -33,7 +33,6 @@ export async function newUser(userData: FormData){
 }
 
 export async function deleteUser(id){
-    console.log("Who called?");
     const { error } =await supabase
         .from('NOTES')
         .delete().eq('id',id)
@@ -47,6 +46,18 @@ export async function getUsers(){
         .from('USERS')
         .select()
     ;
-    console.log(data);
     return data
+}
+
+export async function getRoles(){
+    const roles=await supabase
+        .from('ROLES')
+        .select()
+    ;
+    return roles;
+}
+
+export async function changeRole(n,r){
+    const {error} = await supabase.from('USERS')
+    .update({role:r}).eq('id',n);
 }
