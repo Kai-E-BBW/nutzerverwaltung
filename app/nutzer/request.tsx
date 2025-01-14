@@ -4,10 +4,15 @@ import {changeRole,deleteUser,newUser} from '@/app/lib/actions'
 import {useState} from 'react';
 
 export function DeleteButton(userid,text){
-    return <button onClick={()=>deleteUser(user)}>{text}</button>
+    return( 
+        <>
+        <button onClick={()=>deleteUser(userid)}>{text}</button>
+        </>
+    );
 }
 
-export function RoleChanger(userid,roles,role){
+export function RoleChanger(props){
+    const {userid,roles,role}=props;
     const [r,setRole]=useState(role);
     return (
         <select value={r} onChange={(e) => {
@@ -16,7 +21,7 @@ export function RoleChanger(userid,roles,role){
         }}> 
         {roles.map((ro)=>(
             <option value={ro.id}>{ro.name}</option>
-        )}
+        ))}
         </select>
-    )
+    );
 }

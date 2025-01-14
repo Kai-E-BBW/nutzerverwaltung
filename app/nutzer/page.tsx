@@ -6,7 +6,6 @@ import { DeleteButton, RoleChanger} from './request.tsx'
 export default async function Page() {
     const users =await getUsers();
     const roles=await getRoles();
-    console.log("got users");
     return (
         <>
             <ul>
@@ -18,7 +17,7 @@ export default async function Page() {
                             roles={roles}
                             role= {entry.role} 
                             />
-                        <DeleteButton userid={entry.id} text={"delete "+entry.name} />
+                        {/*<DeleteButton userid={entry.id} text={"delete "+entry.name} />*/}
                     </li>
                 ))}
                 {/*<Link href='./userCreationForm/' >Neuen Nutzer hinzufügen</Link>*/}

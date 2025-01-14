@@ -50,11 +50,11 @@ export async function getUsers(){
 }
 
 export async function getRoles(){
-    const roles=await supabase
+    const {data}=await supabase
         .from('ROLES')
         .select()
     ;
-    return roles;
+    return data;
 }
 
 export async function changeRole(n,r){
