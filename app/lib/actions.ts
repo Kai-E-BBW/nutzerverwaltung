@@ -28,6 +28,7 @@ export async function newUser(userData: FormData){
     const { error } =await supabase
         .from('USERS')
         .insert({name: name, password: password, role: role });
+//    if (error) throw error;
     revalidatePath('/nutzer');
     redirect('/nutzer');
 }
@@ -37,6 +38,7 @@ export async function deleteUser(id){
         .from('USERS')
         .delete().eq('id',id)
     ;
+//    if (error) throw error;
     revalidatePath('/nutzer');
     redirect('/nutzer');
 }
@@ -46,6 +48,7 @@ export async function getUsers(){
         .from('USERS')
         .select()
     ;
+//    if (error) throw error;
     return data
 }
 
