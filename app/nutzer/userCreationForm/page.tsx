@@ -1,21 +1,23 @@
-import {createClient} from '@/utils/supabase/server'
-import {newUser} from '@/app/lib/actions'
+import {newUser,getRoles} from '@/app/lib/actions'
+import Link from 'next/link'
 export default async function Page(){
-    const supabase= await createClient();
-    const {data: roles}= await supabase.from("ROLES").select();
+    const roles=await getRoles();
     return(
+        <>
         <form action={newUser}>
             <label for="name">Benutzername: </label>
-            <input type="text" id="name" name="name"><br><br>
+            <input type="text" id="name" name="name"></input><br></br>
             <label for="password">Passwort: </label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password"></input>
             <label for="role">Rechte: </label>
             <select name="role" id="role">
                 {roles.map((role)=>(
-                    <option value={role.id}>{role.name}</option>
-               ))}
+                    <option key={role.name} value={role.id}>{role.name}</option>
+                ))}
             </select>
-            <input type="submit" value="Submit" id="submit">Nutzer Registrieren</input>
+            <input type="submit" value="Submit" id="submit" text="Nutzer Registrieren"></input>
         </form>
+            <Link href='/nutzer'>Abbrechen</Link>
+        </>
     );
 }

@@ -1,6 +1,6 @@
 import { UserList } from './userList'
 import { getUsers,deleteUser,newUser,getRoles,changeRole } from '@/app/lib/actions'
-import { Link } from 'next/navigation'
+import Link from 'next/link'
 import { DeleteButton, RoleChanger} from './request.tsx'
 
 export default async function Page() {
@@ -17,11 +17,11 @@ export default async function Page() {
                             roles={roles}
                             role= {entry.role} 
                             />
-                        {/*<DeleteButton userid={entry.id} text={"delete "+entry.name} />*/}
+                        <DeleteButton userid={entry.id} text={"delete "+entry.name} />
                     </li>
                 ))}
-                {/*<Link href='./userCreationForm/' >Neuen Nutzer hinzufügen</Link>*/}
             </ul>
+            <Link href='/nutzer/userCreationForm' >Neuen Nutzer hinzufügen</Link>
         </>
      //<pre>{JSON.stringify(users, null,2)}</pre>
     );

@@ -34,7 +34,7 @@ export async function newUser(userData: FormData){
 
 export async function deleteUser(id){
     const { error } =await supabase
-        .from('NOTES')
+        .from('USERS')
         .delete().eq('id',id)
     ;
     revalidatePath('/nutzer');
@@ -60,4 +60,6 @@ export async function getRoles(){
 export async function changeRole(n,r){
     const {error} = await supabase.from('USERS')
     .update({role:r}).eq('id',n);
+    revalidatePath('/nutzer');
+    redirect('/nutzer');
 }
