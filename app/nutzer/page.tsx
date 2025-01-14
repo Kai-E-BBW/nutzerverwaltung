@@ -1,6 +1,6 @@
 import { UserList } from './userList'
 import { getUsers,deleteUser,newUser,getRoles,changeRole } from '@/app/lib/actions'
-import {Link} from 'next/link'
+import Link from 'next/link'
 import { DeleteButton, RoleChanger} from './request.tsx'
 
 export default async function Page() {
