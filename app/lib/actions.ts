@@ -3,6 +3,8 @@
 import {createClient} from '@/utils/supabase/server';
 import {revalidatePath} from 'next/cache';
 import {redirect} from 'next/navigation';
+import { SignIn } from '@/auth';
+import { AuthError} from 'next-auth';
 
 const supabase=await createClient()
 
@@ -14,6 +16,22 @@ const supabase=await createClient()
 //});
 
 //const NewUser=UserSchema.omit({id:true});
+
+export async function authenticate(prevState, formData){
+    try{
+        await signIn('credentials',formData);
+    }catch (error){
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case 'CredentialsSignIn':
+                    return 'Invalid credentials.'
+                default:
+                    return 'Something went wrong';
+            }
+        }
+        throw error;
+    }
+}
 
 export async function newUser(userData: FormData){
 //    const {name, password, role}=NewUser.parse({
