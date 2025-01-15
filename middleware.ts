@@ -7,6 +7,8 @@ export async function middleware(request: NextRequest) {
   return await updateSession(request);
 }
 
+// export default NextAuth(authConfig).auth;
+
 export const config = {
   matcher: [
     /*
@@ -17,6 +19,6 @@ export const config = {
      * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
      * Feel free to modify this pattern to include more paths.
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

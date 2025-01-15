@@ -25,7 +25,7 @@ export default async function Page() {
             <Link href='/userCreationForm' >Neuen Nutzer hinzufügen</Link>
             <form 
                 action={async ()=> {
-                    'use server';
+                    'use server'
                     await signOut();
                 }}
             >
