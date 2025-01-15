@@ -17,7 +17,7 @@ export default async function Page(){
             </select>
             <input type="submit" value="Submit" id="submit" text="Nutzer Registrieren"></input>
         </form>
-            <Link href='/nutzer'>Abbrechen</Link>
+            <Link href='/'>Abbrechen</Link>
         </>
     );
 }

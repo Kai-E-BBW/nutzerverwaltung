@@ -1,17 +1,28 @@
-import Hero from "@/components/hero";
-import ConnectSupabaseSteps from "@/components/tutorial/connect-supabase-steps";
-import SignUpUserSteps from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
-import Link from 'next/link';
-export default async function Index() {
-  return (
-    <>
-      <Hero />
-      <main className="flex-1 flex flex-col gap-6 px-4">
-        <h2 className="font-medium text-xl mb-4">Next steps</h2>
-        {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-	<Link href="/nutzer">zu den Nutzern</Link>
-      </main>
-    </>
-  );
+import { UserList } from './userList'
+import { getUsers,deleteUser,newUser,getRoles,changeRole } from '@/app/lib/actions'
+import Link from 'next/link'
+import { DeleteButton, RoleChanger} from './request.tsx'
+
+export default async function Page() {
+    const users =await getUsers();
+    const roles=await getRoles();
+    return (
+        <>
+            <ul>
+                {users.map((entry) => (
+                    <li key={entry.id}>
+                        {entry.name}
+                        <RoleChanger 
+                            userid={entry.id}
+                            roles={roles}
+                            role= {entry.role} 
+                            />
+                        <DeleteButton userid={entry.id} text={"delete "+entry.name} />
+                    </li>
+                ))}
+            </ul>
+            <Link href='/userCreationForm' >Neuen Nutzer hinzufügen</Link>
+        </>
+     //<pre>{JSON.stringify(users, null,2)}</pre>
+    );
 }
