@@ -1,3 +1,4 @@
+// @ts-check
 import {newUser,getRoles} from '@/app/lib/actions'
 import Link from 'next/link'
 export default async function Page(){

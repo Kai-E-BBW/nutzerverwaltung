@@ -1,13 +1,17 @@
 import { type NextRequest } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 import NextAuth from 'next-auth'
-import {authConfig} from './auth.config'
+import { pages } from './auth-pages.ts'
+import {withAuth} from 'next-auth/middleware'
+// import {authConfig} from './auth.config'
 
 export async function middleware(request: NextRequest) {
   return await updateSession(request);
 }
 
-// export default NextAuth(authConfig).auth;
+export default withAuth({
+    pages,
+});
 
 export const config = {
   matcher: [

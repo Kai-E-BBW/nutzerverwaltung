@@ -29,7 +29,7 @@ const supabase=await createClient();
         throw error;
     }*/
 
-export async function authenticate(prevState, formData){
+export async function authenticate(prevState, formData: FormData){
     // try{
         await signIn('credentials',formData);
     // }
@@ -41,9 +41,9 @@ export async function newUser(userData: FormData){
 //        role: userData.get('role'),
 //        password: userData.get('password'),
 //    });
-    const name=userData.get('name');
-    const role=userData.get('role');
-    const password=userData.get('password');
+    const name: string=userData.get('name');
+    const role: number=userData.get('role');
+    const password: string=userData.get('password');
 
     const { error } =await supabase
         .from('USERS')
@@ -53,7 +53,7 @@ export async function newUser(userData: FormData){
     redirect('/nutzer');
 }
 
-export async function deleteUser(id){
+export async function deleteUser(id: string){
     const { error } =await supabase
         .from('USERS')
         .delete().eq('id',id)
@@ -80,9 +80,9 @@ export async function getRoles(){
     return data;
 }
 
-export async function changeRole(n,r){
+export async function changeRole(id: string,r: number){
     const {error} = await supabase.from('USERS')
-    .update({role:r}).eq('id',n);
+    .update({role:r}).eq('id',id);
     revalidatePath('/nutzer');
     redirect('/nutzer');
 }
