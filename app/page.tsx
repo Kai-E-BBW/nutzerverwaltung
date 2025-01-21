@@ -1,8 +1,7 @@
 import { UserList } from './userList'
-import { getUsers,deleteUser,newUser,getRoles,changeRole } from '@/app/lib/actions'
+import { getUsers,deleteUser,newUser,getRoles,changeRole,signOut } from '@/app/lib/actions'
 import Link from 'next/link'
 import { DeleteButton, RoleChanger} from './request.tsx'
-import { signOut } from '@/auth'
 
 export default async function Page() {
     const users =await getUsers();

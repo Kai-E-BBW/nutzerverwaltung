@@ -1,6 +1,8 @@
 import type { NextAuthConfig } from 'next-auth';
 import { pages } from './auth-pages.ts';
+// import { createClient } from '@/utils/supabase/server'
 
+// const supabase= await createClient();
 export const authConfig = {
     pages,
     callbacks: {
