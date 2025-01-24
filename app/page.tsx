@@ -1,9 +1,15 @@
 import { UserList } from './userList'
-import { getUsers,deleteUser,newUser,getRoles,changeRole,signOut } from '@/app/lib/actions'
+import { getUsers,deleteUser,newUser,
+        getRoles,changeRole,signOut, whoLoggedIn } from '@/app/lib/actions'
 import Link from 'next/link'
+import {redirect } from 'next/navigation'
 import { DeleteButton, RoleChanger} from './request.tsx'
 
 export default async function Page() {
+    const user = await whoLoggedIn();
+    if (!user) {
+        redirect('/login');
+    }
     const users =await getUsers();
     const roles=await getRoles();
     return (

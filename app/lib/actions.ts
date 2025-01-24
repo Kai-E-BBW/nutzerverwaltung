@@ -8,27 +8,6 @@ import { AuthError} from 'next-auth';
 
 const supabase=await createClient();
 
-//const UserSchema = z.object({
-//    id: z.string(),
-//    name: z.string(),
-//    password: z.string(),
-//    role: z.number(),
-//});
-
-//const NewUser=UserSchema.omit({id:true});
-
-/*catch (error){
-        if (error instanceof AuthError) {
-            switch (error.type) {
-                case 'CredentialsSignIn':
-                    return 'Invalid credentials.'
-                default:
-                    return 'Something went wrong';
-            }
-        }
-        throw error;
-    }*/
-
 export async function authenticate(prevState, formData: FormData){
     // try{
         await signIn('credentials',formData);
@@ -36,11 +15,6 @@ export async function authenticate(prevState, formData: FormData){
 }
 
 export async function newUser(userData: FormData){
-//    const {name, password, role}=NewUser.parse({
-//        name: userData.get('name'),
-//        role: userData.get('role'),
-//        password: userData.get('password'),
-//    });
     const name: string=userData.get('name');
     const role: number=userData.get('role');
     const password: string=userData.get('password');
@@ -49,8 +23,13 @@ export async function newUser(userData: FormData){
         .from('USERS')
         .insert({name: name, password: password, role: role });
 //    if (error) throw error;
-    revalidatePath('/nutzer');
-    redirect('/nutzer');
+    revalidatePath('/');
+    redirect('/');
+}
+
+export async function whoLoggedIn(){
+    const {data:{user}}=await supabase.auth.getUser();
+    return user;
 }
 
 export async function deleteUser(id: string){
@@ -59,8 +38,8 @@ export async function deleteUser(id: string){
         .delete().eq('id',id)
     ;
 //    if (error) throw error;
-    revalidatePath('/nutzer');
-    redirect('/nutzer');
+    revalidatePath('/');
+    redirect('/');
 }
 //§§
 export async function getUsers(){
@@ -83,40 +62,53 @@ export async function getRoles(){
 export async function changeRole(id: string,r: number){
     const {error} = await supabase.from('USERS')
     .update({role:r}).eq('id',id);
-    revalidatePath('/nutzer');
-    redirect('/nutzer');
+    revalidatePath('/');
+    redirect('/');
 }
 
-
+    // check if name is an email address. make a fake, but valid adress if it isn't
+function fakeMail(name: string){
+    if (name.indexOf('@')==-1){
+       name+="@noemail.net"; 
+    }
+    return name
+}
 
 export async function login(formData: FormData) {
-    const data = {
+    let data = {
         name: formData.get('name') as string,
         password: formData.get('password') as string,
     };
+    data.name=fakeMail(data.name);
 
     const { error }=await supabase.auth.signInWithPassword(data);
 
     if (error) {
-        redirect('error');
+        console.log(error);
+        // redirect('/error');
     }
-    revalidatePath('/users','layout');
-    redirect('/users');
+    revalidatePath('/','layout');
+    redirect('/');
 }
 
 export async function signup(formData: FormData) {
-    const data={
+    let data={
         name: formData.get('name') as string,
         password: formData.get('password') as string,
     }
+    console.log(data);
+    console.log(data.name);
+    data.name=fakeMail(data.name);
+    console.log(data);
 
     const {error}=await supabase.auth.signUp(data);
     if (error) {
-        redirect('/error');
+        console.log(error);
+        // redirect('/error');
     }
 
-    revalidatePath('/users','layout');
-    redirect('/users');
+    revalidatePath('/login/reg_result','layout');
+    redirect('/login/reg_result');
 }
 
 export async function signOut(){
@@ -124,6 +116,6 @@ export async function signOut(){
     console.log(user);
     const {error} = await supabase.auth.signOut();
     if (error) {
-        redirect('/error');
+        // redirect('/error');
     }
 }

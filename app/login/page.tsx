@@ -1,16 +1,18 @@
 'use client';
 import {useActionState} from 'react';
-import {authenticate } from '@/app/lib/actions';
-import { login } from './actions'
+import {authenticate,login,signup } from '@/app/lib/actions';
 
 export default function LoginPage(){
     return (
         <form>
             <label htmlFor="name">Name:</label>
-            <input id="name" required />
+            <input id="name" name="name" required />
             <label htmlFor="password">Passwort:</label>
             <input id="password" name="password" type="password" required />
-            <button formAction={login}>Log in</button>
+            <div>
+                <button formAction={login}>Log in</button>
+                <button formAction={signup}>registrieren</button>
+            </div>
         </form>
     );
     // const [errorMessage, formAction, isPending] = useActionState(

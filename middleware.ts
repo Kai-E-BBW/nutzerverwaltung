@@ -1,4 +1,4 @@
-import { type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 import NextAuth from 'next-auth'
 import { pages } from './auth-pages.ts'
@@ -6,7 +6,7 @@ import {withAuth} from 'next-auth/middleware'
 // import {authConfig} from './auth.config'
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+    return await updateSession(request);
 }
 
 export default withAuth({
