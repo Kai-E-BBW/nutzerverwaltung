@@ -1,4 +1,5 @@
 import {createClient} from '@/utils/supabase/server'
+import Link from 'next/link'
 
 export default async function Page(){
     const supabase=await createClient();
@@ -6,8 +7,9 @@ export default async function Page(){
     return (
         <>
             <p>registrierung von</p>
-            <p>{user}</p>
+            <p>{user.email}</p>
             <p>war erfolgreich</p>
+            <Link href="/">zur Hauptseite</Link>
         </>
     );
 }

@@ -18,7 +18,6 @@ export async function newUser(userData: FormData){
     const name: string=userData.get('name');
     const role: number=userData.get('role');
     const password: string=userData.get('password');
-
     const { error } =await supabase
         .from('USERS')
         .insert({name: name, password: password, role: role });
@@ -76,13 +75,11 @@ function fakeMail(name: string){
 
 export async function login(formData: FormData) {
     let data = {
-        name: formData.get('name') as string,
+        email: formData.get('email') as string,
         password: formData.get('password') as string,
     };
-    data.name=fakeMail(data.name);
-
+    data.email=fakeMail(data.email);
     const { error }=await supabase.auth.signInWithPassword(data);
-
     if (error) {
         console.log(error);
         // redirect('/error');
@@ -93,20 +90,18 @@ export async function login(formData: FormData) {
 
 export async function signup(formData: FormData) {
     let data={
-        name: formData.get('name') as string,
+        email: formData.get('email') as string,
         password: formData.get('password') as string,
     }
     console.log(data);
-    console.log(data.name);
-    data.name=fakeMail(data.name);
+    console.log(data.email);
+    data.email=fakeMail(data.email);
     console.log(data);
-
     const {error}=await supabase.auth.signUp(data);
     if (error) {
         console.log(error);
         // redirect('/error');
     }
-
     revalidatePath('/login/reg_result','layout');
     redirect('/login/reg_result');
 }

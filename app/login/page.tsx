@@ -5,8 +5,8 @@ import {authenticate,login,signup } from '@/app/lib/actions';
 export default function LoginPage(){
     return (
         <form>
-            <label htmlFor="name">Name:</label>
-            <input id="name" name="name" required />
+            <label htmlFor="email">Name:</label>
+            <input id="email" name="email" type="email" required />
             <label htmlFor="password">Passwort:</label>
             <input id="password" name="password" type="password" required />
             <div>
@@ -28,9 +28,9 @@ export default function LoginPage(){
     //             <h1> Please log in to continue </h1>
     //             <div className="w-full">
     //                 <div>
-    //                     <label htmlFor="name">Name</label>
+    //                     <label htmlFor="email">Name</label>
     //                     <div className="relative">
-    //                         <input id="name" name="name" 
+    //                         <input id="email" name="email" 
     //                             placeholder="Gib deinen Namen ein" required 
     //                         />
     //                     </div>
